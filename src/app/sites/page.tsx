@@ -16,6 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 
@@ -89,16 +90,16 @@ export default function SitesPage() {
             <TableBody>
               {sites.map(({ _id, url, type, contentChecked, data }) => (
                 <TableRow key={String(_id)}>
-                  <TableCell>{url}</TableCell>
-                  <TableCell>{type}</TableCell>
                   <TableCell>
-                    <Checkbox checked={contentChecked} disabled />
+                    <Link href={`/sites/${_id}`} target='__blank'>{url}</Link>
                   </TableCell>
+                  <TableCell>{type}</TableCell>
+                  <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{data ? data.category : '--'}</TableCell>
                   <TableCell>{data ? data.minAge : '--'}</TableCell>
-                  <TableCell>{data ? <Checkbox checked={data.nudity} disabled /> : '--'}</TableCell>
-                  <TableCell>{data ? <Checkbox checked={data.sexuality} disabled /> : '--'}</TableCell>
-                  <TableCell>{data ? <Checkbox checked={data.violence} disabled /> : '--'}</TableCell>
+                  <TableCell>{data ? (data.nudity ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.sexuality ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.violence ? 'Yes' : 'No') : '--'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
