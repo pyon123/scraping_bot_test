@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   CircularProgress,
+  FormControlLabel,
   Modal,
   Stack,
   Table,
@@ -26,6 +27,7 @@ export default function SitesPage() {
   const [openModal, setOpenModal] = useState(false);
   const [site, setSite] = useState('');
   const [error, setError] = useState('');
+  const [requireSubSearch, setRequireSubSearch] = useState(false);
 
   const { data: sites = [], isLoading: pageLoading } = useGetSitesQuery();
   const [addSite, { isLoading: isSubmitting }] = useAddSiteMutation();
@@ -39,7 +41,7 @@ export default function SitesPage() {
     }
 
     try {
-      await addSite({ site }).unwrap();
+      await addSite({ site, requireSubSearch }).unwrap();
 
       enqueueSnackbar('Site added', {
         variant: 'success',
@@ -64,6 +66,7 @@ export default function SitesPage() {
           onClick={() => {
             setSite('');
             setOpenModal(true);
+            setRequireSubSearch(false);
           }}
         >
           Add Site
@@ -91,7 +94,9 @@ export default function SitesPage() {
               {sites.map(({ _id, url, type, contentChecked, data }) => (
                 <TableRow key={String(_id)}>
                   <TableCell>
-                    <Link href={`/sites/${_id}`} target='__blank'>{url}</Link>
+                    <Link href={`/sites/${_id}`} target="__blank">
+                      {url}
+                    </Link>
                   </TableCell>
                   <TableCell>{type}</TableCell>
                   <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
@@ -131,6 +136,21 @@ export default function SitesPage() {
             error={!!error}
             helperText={error}
           />
+          <FormControlLabel
+            control={
+              <Checkbox
+                value={requireSubSearch}
+                defaultChecked={false}
+                onChange={({ target }) => setRequireSubSearch(target.checked)}
+              />
+            }
+            label="Require sub url search"
+            sx={{
+              width: '100%',
+              mt: 2,
+            }}
+          />
+
           <LoadingButton sx={{ mt: 4 }} variant="contained" onClick={onAddSite} fullWidth loading={isSubmitting}>
             Add
           </LoadingButton>

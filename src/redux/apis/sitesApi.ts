@@ -20,11 +20,11 @@ export const sitesApi = createApi({
       }),
       providesTags: ['Sites'],
     }),
-    addSite: builder.mutation<void, { site: string }>({
-      query: ({ site }) => ({
+    addSite: builder.mutation<void, { site: string; requireSubSearch: boolean }>({
+      query: ({ site, requireSubSearch }) => ({
         url: '',
         method: 'POST',
-        body: { site },
+        body: { site, requireSubSearch },
       }),
       invalidatesTags: ['Sites'],
     }),

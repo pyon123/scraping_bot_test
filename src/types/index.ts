@@ -30,6 +30,7 @@ export interface ISite {
   type: SiteType;
   youtube?: any;
   subSearched?: boolean;
+  requireSubSearch?: boolean;
   contentChecked?: boolean;
   nudity?: boolean;
   dataText?: string;

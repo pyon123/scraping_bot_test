@@ -19,7 +19,7 @@ export const GET = async () => {
 
 export const POST = async (request: NextRequest) => {
   try {
-    let { site } = await request.json();
+    let { site, requireSubSearch = false } = await request.json();
     if (!site || typeof site !== 'string') {
       return ResponseErrors.invalid();
     }
@@ -27,24 +27,27 @@ export const POST = async (request: NextRequest) => {
       return ResponseErrors.invalid();
     }
 
+    let type = SiteType.website;
     if (site.includes('youtube.com')) {
-      return ResponseErrors.base('Youtbe not acceptable');
+      type = SiteType.youtube;
     }
     if (!site.startsWith('http')) {
       site = `https://${site}`;
     }
 
-    await sitesCol.updateOne(
-      { url: site },
-      {
-        $set: {
-          url: site,
-          baseUrl: site,
-          type: SiteType.website,
-        },
-      },
-      { upsert: true }
-    );
+    const existing = await sitesCol.findOne({ url: site });
+    if (existing) {
+      return ResponseErrors.base('Site already exists in our db');
+    }
+
+    await sitesCol.insertOne({
+      url: site,
+      baseUrl: site,
+      type,
+      subSearched: false,
+      requireSubSearch,
+      contentChecked: false,
+    });
 
     return NextResponse.json({});
   } catch (error: any) {
