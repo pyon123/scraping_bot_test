@@ -27,6 +27,9 @@ export const POST = async (request: NextRequest) => {
       return ResponseErrors.invalid();
     }
 
+    site = site.trim();
+    site = site.endsWith('/') ? site.slice(0, -1) : site;
+
     let type = SiteType.website;
     if (site.includes('youtube.com')) {
       type = SiteType.youtube;
