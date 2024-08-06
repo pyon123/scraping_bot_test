@@ -31,7 +31,7 @@ export const POST = async (request: NextRequest) => {
     site = site.endsWith('/') ? site.slice(0, -1) : site;
 
     let type = SiteType.website;
-    if (site.includes('youtube.com')) {
+    if (site.includes('youtube.com') || site.includes('youtu.be')) {
       type = SiteType.youtube;
     }
     if (!site.startsWith('http')) {
