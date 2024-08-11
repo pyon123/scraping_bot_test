@@ -10,7 +10,7 @@ const siteRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(
 
 export const GET = async () => {
   try {
-    const sites = await sitesCol.find().toArray();
+    const sites = await sitesCol.find().sort({ searchedAt: -1 }).toArray();
     return NextResponse.json(sites);
   } catch (error: any) {
     return ResponseErrors.base(error.message);

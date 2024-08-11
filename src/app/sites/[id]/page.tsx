@@ -125,6 +125,38 @@ export default function SitePage({ params: { id } }: IPage) {
                     {data.data.political ? 'Yes' : 'No'}
                   </Typography>
                 </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography fontSize={20} color="gray" variant="h6">
+                    Drug:
+                  </Typography>
+                  <Typography fontSize={20} variant="body1">
+                    {data.data.drug ? 'Yes' : 'No'}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography fontSize={20} color="gray" variant="h6">
+                    Alcohol:
+                  </Typography>
+                  <Typography fontSize={20} variant="body1">
+                    {data.data.alcohol ? 'Yes' : 'No'}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography fontSize={20} color="gray" variant="h6">
+                    Gambling:
+                  </Typography>
+                  <Typography fontSize={20} variant="body1">
+                    {data.data.gambling ? 'Yes' : 'No'}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography fontSize={20} color="gray" variant="h6">
+                    Bidding:
+                  </Typography>
+                  <Typography fontSize={20} variant="body1">
+                    {data.data.bidding ? 'Yes' : 'No'}
+                  </Typography>
+                </Stack>
               </>
             ) : (
               <Typography fontSize={20} color="gray" variant="h6">

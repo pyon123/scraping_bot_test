@@ -73,7 +73,7 @@ export default function SitesPage() {
         </Button>
       </Stack>
 
-      <Stack sx={{ width: '100%', maxWidth: '1024px' }} spacing={2}>
+      <Stack sx={{ width: '100%', maxWidth: '1024px', overflowX: 'auto' }} spacing={2}>
         {pageLoading ? (
           <CircularProgress size={30} />
         ) : (
@@ -84,16 +84,22 @@ export default function SitesPage() {
                 <TableCell>Type</TableCell>
                 <TableCell>Searched</TableCell>
                 <TableCell>Category</TableCell>
+                <TableCell>Edu. Category</TableCell>
                 <TableCell>Min Age</TableCell>
                 <TableCell>Nudity</TableCell>
                 <TableCell>Sexuality</TableCell>
                 <TableCell>Violence</TableCell>
+                <TableCell>Political</TableCell>
+                <TableCell>Drug</TableCell>
+                <TableCell>Alcohol</TableCell>
+                <TableCell>Gambling</TableCell>
+                <TableCell>Bidding</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {sites.map(({ _id, url, type, contentChecked, data }) => (
                 <TableRow key={String(_id)}>
-                  <TableCell>
+                  <TableCell sx={{ display: 'block', width: '200px', wordBreak: 'break-all' }}>
                     <Link href={`/sites/${_id}`} target="__blank">
                       {url}
                     </Link>
@@ -101,10 +107,16 @@ export default function SitesPage() {
                   <TableCell>{type}</TableCell>
                   <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{data ? data.category : '--'}</TableCell>
+                  <TableCell>{data ? data.eduCategories : '--'}</TableCell>
                   <TableCell>{data ? data.minAge : '--'}</TableCell>
                   <TableCell>{data ? (data.nudity ? 'Yes' : 'No') : '--'}</TableCell>
                   <TableCell>{data ? (data.sexuality ? 'Yes' : 'No') : '--'}</TableCell>
                   <TableCell>{data ? (data.violence ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.political ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.drug ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.alcohol ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.gambling ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>{data ? (data.bidding ? 'Yes' : 'No') : '--'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

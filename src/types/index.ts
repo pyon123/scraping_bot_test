@@ -20,6 +20,10 @@ export interface IData {
   religion: boolean;
   violence: boolean;
   political: boolean;
+  drug: boolean;
+  alcohol: boolean;
+  gambling: boolean;
+  bidding: boolean;
   // controversialTopics: boolean;
   // previewThumbnail?: string;
 }
@@ -38,6 +42,7 @@ export interface ISite {
   imgLinks?: string[];
   audioLinks?: string[];
   vidoeLinks?: string[];
+  searchedAt?: number;
 }
 
 export interface IYoutubeSearch {
