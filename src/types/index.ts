@@ -11,6 +11,12 @@ export enum CategoryType {
   entertainment = 'entertainment',
 }
 
+export enum YoutubeType {
+  video = 'video',
+  playlist = 'playlist',
+  channel = 'channel',
+}
+
 export interface IData {
   category: CategoryType;
   eduCategories?: string[];
@@ -30,9 +36,14 @@ export interface IData {
 export interface ISite {
   _id: ObjectId;
   url: string;
+  title?: string;
   baseUrl?: string;
   type: SiteType;
-  youtube?: any;
+  youtube?: {
+    type: YoutubeType;
+    id: string;
+    url: string;
+  };
   subSearched?: boolean;
   requireSubSearch?: boolean;
   contentChecked?: boolean;

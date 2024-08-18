@@ -39,12 +39,30 @@ export default function SitePage({ params: { id } }: IPage) {
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography fontSize={20} color="gray" variant="h6">
+              Title:
+            </Typography>
+            <Typography fontSize={20} variant="body1">
+              {data.title}
+            </Typography>
+          </Stack>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Typography fontSize={20} color="gray" variant="h6">
               Type:
             </Typography>
             <Typography fontSize={20} variant="body1">
               {data.type}
             </Typography>
           </Stack>
+          {data.youtube ? (
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Typography fontSize={20} color="gray" variant="h6">
+                Youtube Type:
+              </Typography>
+              <Typography fontSize={20} variant="body1">
+                {data.youtube.type}
+              </Typography>
+            </Stack>
+          ) : undefined}
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography fontSize={20} color="gray" variant="h6">
               Searched:

@@ -81,7 +81,9 @@ export default function SitesPage() {
             <TableHead>
               <TableRow>
                 <TableCell>URL</TableCell>
+                <TableCell>Title</TableCell>
                 <TableCell>Type</TableCell>
+                <TableCell>Youtube Type</TableCell>
                 <TableCell>Searched</TableCell>
                 <TableCell>Category</TableCell>
                 <TableCell>Edu. Category</TableCell>
@@ -97,14 +99,20 @@ export default function SitesPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sites.map(({ _id, url, type, contentChecked, data }) => (
+              {sites.map(({ _id, url, type, title, youtube, contentChecked, data }) => (
                 <TableRow key={String(_id)}>
                   <TableCell sx={{ display: 'block', width: '200px', wordBreak: 'break-all' }}>
                     <Link href={`/sites/${_id}`} target="__blank">
                       {url}
                     </Link>
                   </TableCell>
+                  <TableCell sx={{ display: 'block', width: '200px', wordBreak: 'break-all' }}>
+                    <Link href={`/sites/${_id}`} target="__blank">
+                      {title ? title : '--'}
+                    </Link>
+                  </TableCell>
                   <TableCell>{type}</TableCell>
+                  <TableCell>{youtube ? youtube.type : '--'}</TableCell>
                   <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{data ? data.category : '--'}</TableCell>
                   <TableCell>{data ? data.eduCategories : '--'}</TableCell>
