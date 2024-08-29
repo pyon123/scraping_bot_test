@@ -54,6 +54,7 @@ export interface ISite {
   audioLinks?: string[];
   vidoeLinks?: string[];
   searchedAt?: number;
+  note: string;
 }
 
 export interface IYoutubeSearch {

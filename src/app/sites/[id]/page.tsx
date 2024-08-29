@@ -184,6 +184,17 @@ export default function SitePage({ params: { id } }: IPage) {
           ) : (
             <></>
           )}
+
+          {data.note ? (
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Typography fontSize={20} color="gray" variant="h6">
+                Note:
+              </Typography>
+              <Typography fontSize={20} variant="body1">
+                {data.note}
+              </Typography>
+            </Stack>
+          ) : undefined}
         </Stack>
       )}
     </Stack>

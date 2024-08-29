@@ -19,7 +19,7 @@ export const GET = async () => {
 
 export const POST = async (request: NextRequest) => {
   try {
-    let { site, requireSubSearch = false } = await request.json();
+    let { site, requireSubSearch = false, note = '' } = await request.json();
     if (!site || typeof site !== 'string') {
       return ResponseErrors.invalid();
     }
@@ -50,6 +50,7 @@ export const POST = async (request: NextRequest) => {
       subSearched: false,
       requireSubSearch,
       contentChecked: false,
+      note,
     });
 
     return NextResponse.json({});

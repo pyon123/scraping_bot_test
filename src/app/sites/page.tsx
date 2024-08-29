@@ -26,6 +26,7 @@ export default function SitesPage() {
 
   const [openModal, setOpenModal] = useState(false);
   const [site, setSite] = useState('');
+  const [note, setNote] = useState('');
   const [error, setError] = useState('');
   const [requireSubSearch, setRequireSubSearch] = useState(false);
 
@@ -41,7 +42,7 @@ export default function SitesPage() {
     }
 
     try {
-      await addSite({ site, requireSubSearch }).unwrap();
+      await addSite({ site, requireSubSearch, note }).unwrap();
 
       enqueueSnackbar('Site added', {
         variant: 'success',
@@ -49,6 +50,7 @@ export default function SitesPage() {
 
       setOpenModal(false);
       setSite('');
+      setNote('');
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message || 'Error, try again later', {
         variant: 'error',
@@ -65,6 +67,7 @@ export default function SitesPage() {
           variant="contained"
           onClick={() => {
             setSite('');
+            setNote('');
             setOpenModal(true);
             setRequireSubSearch(false);
           }}
@@ -73,7 +76,7 @@ export default function SitesPage() {
         </Button>
       </Stack>
 
-      <Stack sx={{ width: '100%', maxWidth: '1024px', overflowX: 'auto' }} spacing={2}>
+      <Stack sx={{ width: '100%', overflowX: 'auto' }} spacing={2}>
         {pageLoading ? (
           <CircularProgress size={30} />
         ) : (
@@ -106,7 +109,7 @@ export default function SitesPage() {
                       {url}
                     </Link>
                   </TableCell>
-                  <TableCell sx={{ display: 'block', width: '200px', wordBreak: 'break-all' }}>
+                  <TableCell sx={{ width: '200px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     <Link href={`/sites/${_id}`} target="__blank">
                       {title ? title : '--'}
                     </Link>
@@ -115,7 +118,7 @@ export default function SitesPage() {
                   <TableCell>{youtube ? youtube.type : '--'}</TableCell>
                   <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{data ? data.category : '--'}</TableCell>
-                  <TableCell>{data ? data.eduCategories : '--'}</TableCell>
+                  <TableCell>{data ? data.eduCategories?.join(',') : '--'}</TableCell>
                   <TableCell>{data ? data.minAge : '--'}</TableCell>
                   <TableCell>{data ? (data.nudity ? 'Yes' : 'No') : '--'}</TableCell>
                   <TableCell>{data ? (data.sexuality ? 'Yes' : 'No') : '--'}</TableCell>
@@ -153,6 +156,17 @@ export default function SitesPage() {
             }}
             fullWidth
             placeholder="https://example.com"
+            error={!!error}
+            helperText={error}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            value={note}
+            variant="outlined"
+            onChange={({ target }) => {
+              setNote(target.value);
+            }}
+            fullWidth
             error={!!error}
             helperText={error}
           />
