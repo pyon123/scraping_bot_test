@@ -28,7 +28,14 @@ export const sitesApi = createApi({
       }),
       invalidatesTags: ['Sites'],
     }),
+    markWrong: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Sites'],
+    }),
   }),
 });
 
-export const { useGetSitesQuery, useGetSiteQuery, useAddSiteMutation } = sitesApi;
+export const { useGetSitesQuery, useGetSiteQuery, useAddSiteMutation, useMarkWrongMutation } = sitesApi;

@@ -1,12 +1,13 @@
 'use client';
 
-import { useAddSiteMutation, useGetSitesQuery } from '@/redux/apis/sitesApi';
+import { useAddSiteMutation, useGetSitesQuery, useMarkWrongMutation } from '@/redux/apis/sitesApi';
 import { LoadingButton } from '@mui/lab';
 import {
   Button,
   Checkbox,
   CircularProgress,
   FormControlLabel,
+  FormHelperText,
   Modal,
   Stack,
   Table,
@@ -32,6 +33,7 @@ export default function SitesPage() {
 
   const { data: sites = [], isLoading: pageLoading } = useGetSitesQuery();
   const [addSite, { isLoading: isSubmitting }] = useAddSiteMutation();
+  const [markWrong, { isLoading: isMarkWrong }] = useMarkWrongMutation();
 
   const onAddSite = async () => {
     setError('');
@@ -51,6 +53,20 @@ export default function SitesPage() {
       setOpenModal(false);
       setSite('');
       setNote('');
+    } catch (error: any) {
+      enqueueSnackbar(error?.data?.message || 'Error, try again later', {
+        variant: 'error',
+      });
+    }
+  };
+
+  const onMarkWrong = async (id: string) => {
+    try {
+      await markWrong({ id }).unwrap();
+
+      enqueueSnackbar('Marked', {
+        variant: 'success',
+      });
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message || 'Error, try again later', {
         variant: 'error',
@@ -86,6 +102,7 @@ export default function SitesPage() {
                 <TableCell>URL</TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Type</TableCell>
+                <TableCell>Note</TableCell>
                 <TableCell>Youtube Type</TableCell>
                 <TableCell>Searched</TableCell>
                 <TableCell>Category</TableCell>
@@ -99,12 +116,13 @@ export default function SitesPage() {
                 <TableCell>Alcohol</TableCell>
                 <TableCell>Gambling</TableCell>
                 <TableCell>Bidding</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {sites.map(({ _id, url, type, title, youtube, contentChecked, data }) => (
+              {sites.map(({ _id, url, type, title, note, youtube, contentChecked, data, wrong }) => (
                 <TableRow key={String(_id)}>
-                  <TableCell sx={{ display: 'block', width: '200px', wordBreak: 'break-all' }}>
+                  <TableCell sx={{ width: '200px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     <Link href={`/sites/${_id}`} target="__blank">
                       {url}
                     </Link>
@@ -115,6 +133,7 @@ export default function SitesPage() {
                     </Link>
                   </TableCell>
                   <TableCell>{type}</TableCell>
+                  <TableCell>{note}</TableCell>
                   <TableCell>{youtube ? youtube.type : '--'}</TableCell>
                   <TableCell>{contentChecked ? 'Yes' : 'No'}</TableCell>
                   <TableCell>{data ? data.category : '--'}</TableCell>
@@ -128,6 +147,22 @@ export default function SitesPage() {
                   <TableCell>{data ? (data.alcohol ? 'Yes' : 'No') : '--'}</TableCell>
                   <TableCell>{data ? (data.gambling ? 'Yes' : 'No') : '--'}</TableCell>
                   <TableCell>{data ? (data.bidding ? 'Yes' : 'No') : '--'}</TableCell>
+                  <TableCell>
+                    {wrong ? (
+                      <FormHelperText error>wrong</FormHelperText>
+                    ) : (
+                      <LoadingButton
+                        variant="contained"
+                        size='small'
+                        color="warning"
+                        onClick={() => onMarkWrong(String(_id))}
+                        fullWidth
+                        loading={isSubmitting}
+                      >
+                        Mark Wrong
+                      </LoadingButton>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

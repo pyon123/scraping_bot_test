@@ -55,6 +55,7 @@ export interface ISite {
   vidoeLinks?: string[];
   searchedAt?: number;
   note: string;
+  wrong?: boolean
 }
 
 export interface IYoutubeSearch {
